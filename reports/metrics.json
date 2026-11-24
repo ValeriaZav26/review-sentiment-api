@@ -1,0 +1,26 @@
+{
+  "n_train": 60000,
+  "n_test": 10000,
+  "chosen_model": "TF-IDF + Logistic Regression",
+  "train_f1": 0.994,
+  "results": [
+    {
+      "model": "TF-IDF + Naive Bayes (baseline)",
+      "accuracy": 0.8876,
+      "precision": 0.9034,
+      "recall": 0.8701,
+      "f1": 0.8864,
+      "roc_auc": 0.9554,
+      "train_time_s": 10.0
+    },
+    {
+      "model": "TF-IDF + Logistic Regression",
+      "accuracy": 0.9155,
+      "precision": 0.913,
+      "recall": 0.9201,
+      "f1": 0.9165,
+      "roc_auc": 0.9706,
+      "train_time_s": 139.6
+    }
+  ]
+}

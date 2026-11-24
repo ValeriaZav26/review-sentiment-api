@@ -22,7 +22,12 @@ An end-to-end NLP project: a model that classifies product reviews as **positive
 ## 📊 Results
 
 <!-- METRICS:START -->
-_Run `python -m src.train` — this table is filled in automatically._
+Test set: 10,000 reviews, trained on 60,000 reviews.
+
+| Model | Accuracy | Precision | Recall | F1 | ROC-AUC | Train time, s |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| TF-IDF + Naive Bayes (baseline) | 0.8876 | 0.9034 | 0.8701 | 0.8864 | 0.9554 | 10.0 |
+| TF-IDF + Logistic Regression | 0.9155 | 0.913 | 0.9201 | 0.9165 | 0.9706 | 139.6 |
 <!-- METRICS:END -->
 
 The confusion matrix is saved to `reports/confusion_matrix.png`, and the words that push predictions most strongly towards each class are in `reports/top_words.json`.
