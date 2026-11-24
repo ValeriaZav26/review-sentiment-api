@@ -1,0 +1,50 @@
+name: Train and test
+
+# Runs on every push that changes the code or dependencies, and on demand (Actions → Run workflow).
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "app/**"
+      - "tests/**"
+      - "requirements*.txt"
+      - ".github/workflows/train.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Run tests
+        run: pytest -v
+
+      - name: Train model
+        run: python -m src.train
+
+      - name: Check that the saved model serves predictions
+        run: |
+          python -c "from src.predictor import SentimentModel; m = SentimentModel(); print(m.name, m.predict(['Great quality, would buy again!', 'Broke after two days, waste of money.']))"
+
+      - name: Commit model, reports and README
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add models/model.joblib reports README.md
+          git diff --cached --quiet && echo "Nothing to commit" && exit 0
+          git commit -m "Train model and update metrics [skip ci]"
+          git push
