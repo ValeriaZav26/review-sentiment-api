@@ -33,6 +33,7 @@ def load_amazon_polarity(n_train: int, n_test: int, seed: int = 42) -> tuple[pd.
             "train": "amazon_polarity/train-00000-of-00004.parquet",
             "test": "amazon_polarity/test-00000-of-00001.parquet",
         },
+        verification_mode="no_checks",  # we load 1 of 4 shards on purpose, so split sizes differ
     )
     train = ds["train"].shuffle(seed=seed).select(range(n_train)).to_pandas()
     test = ds["test"].shuffle(seed=seed).select(range(n_test)).to_pandas()
